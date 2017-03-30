@@ -2,25 +2,27 @@ The content below is an example project proposal / requirements document. Replac
 
 (___TODO__: your project name_)
 
-# Shoppy Shoperson 
+# "Wine Not"
 
 ## Overview
 
 (___TODO__: a brief one or two paragraph, high-level description of your project_)
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
-
+"Wine Not" is a web app that is meant for keeping track of your favorite wines and discovering new ones! We've got the top recommendations from wine lovers, like you, all over the globe! 
+Create an account and set up your flavor profile! Receive recommendations using comments/ratings posted by people who have similar palettes. Keep track of all your favorite wines. Share new wine discoveries, whether it's sharing a bottle from a new, unknown brand or just sharing your thoughts
+on a well known one! As a beginner wine lover, I always have a hard time discovering a new favorite or even just picking out an old one when I can't remember. Wine Not is built to help remedy that!
 
 ## Data Model
 
 (___TODO__: a description of your application's data and their relationships to each other_) 
 
-The application will store Users, Lists and Items
-
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
+The application will store users, lists/collections, as well as items.
+- users will be able to set up personal preferences -- red/white -- dry/sweet (properties)
+--> Using these preferences, users will receive a list of suggestions out of all the wines stored in the site(mongodb.find())
+- users will have multiple lists -- favorites, want to try, dislikes. (by references)
+- each list can have multiple wine objects (by embedding)
+- Wine objects will have their own properties -- red/white -- dry/sweet -- comments -- (possibly ratings) (properties)
+- Users will be able to add wines to the general wine DB list (by embedding)
 
 (___TODO__: sample documents_)
 
@@ -28,28 +30,41 @@ An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
-  hash: // a password hash,
-  lists: // an array of references to List documents
+  username: "WineLover10",
+  pd: a password hash,
+  lists: 	flavor profile: [color: 'noPref', acid: 'dry'],
+		favorites: [wine249, wine 259, wine 0, wine 3],
+		try: [wine 67, wine 43, wine 200],
+		dislike: [wine 709, wine 213],
+		recommendMe: 'Merlot', --if there's time
+		dontShowMeAny: 'white' --if there's time
 }
 ```
 
-An Example List with Embedded Items:
+An Example of a single wine object with Embedded Items: -- There will be one overall list with all wine objects
 
 ```javascript
+White:
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
-  ],
-  createdAt: // timestamp
+  color: 'white'
+  acid: 'sweet'
+  image: //path to image in imageDB -- //OR ONLY ACCEPTS WEB LINKS
+  type: 'Chardonnay'
+  feedback: [{comment: "So bad!", user: "WineLover10", rate: 1}, {comment: "Its okay", user: "Kathy23T", rate: 5} ]
+}
+
+Red:
+{
+  color: 'red'
+  acid: 'dry',
+  image: //path to image in imageDB -- //OR ONLY ACCEPTS WEB LINKS
+  type: 'Cabernet',
+  feedback: [{comment: "So good!", user: "WineLover10", rate: 10}, {comment: "Too sour!", user: "Kathy23T", rate: 3} ]
 }
 ```
 
 
-## [Link to Commented First Draft Schema](db.js) 
+## ![Link to Commented First Draft Schema](db.js) 
 
 (___TODO__: create a first draft of your Schemas in db.js and link to it_)
 
