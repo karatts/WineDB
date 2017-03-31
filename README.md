@@ -72,9 +72,9 @@ Red:
 
 (___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
 
-![wireframe1](documentation/wireframe.jpg)
+![wireframe1](documentation/wireframe001.jpg)
 
-![wireframe2](documentation/wireframe2.jpg)
+![wireframe2](documentation/wireframe002.jpg)
 
 ## Site map
 
