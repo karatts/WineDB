@@ -1,5 +1,6 @@
 // 1ST DRAFT DATA MODEL
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+      URLSlugs = require('mongoose-url-slugs');
 
 // users
 // * our site requires authentication...
@@ -11,15 +12,17 @@ const Feedback = new mongoose.Schema({
     rate: Number
 });
 
-const Wines = new mongoose.Schema({
+const Wine = new mongoose.Schema({
     color: String,
     acid: String,
     image: String,
     type: String,
-    feedback: [Feedback]
+    feedback: [Feedback],
 });
 
-const Prefs = new mongoose.Schema({
+Wine.plugin(URLSlugs('color acid image type feedback'));
+
+const Pref = new mongoose.Schema({
     flavors: [Wines], 
     favorites: [String],
     try: [String],
@@ -29,12 +32,17 @@ const Prefs = new mongoose.Schema({
 });
 
 // define the data in our collection
-const Comment = new mongoose.Schema({
+const User = new mongoose.Schema({
   username: String,
   pd: String,
-    lists: [Prefs];
+  lists: [Prefs];
 });
 
-// TODO: add remainder of setup for slugs, connection, registering models, etc. below
+User.plugin(URLSlugs('username pd lists'));
 
+mongoose.model('Feedback', Feedback);
+mongoose.model('Wine', Wine);
+mongoose.model('Pref', Pref);
+mongoose.model('User', User);
 
+mongoose.connect('mongodb://localhost/finProj');
