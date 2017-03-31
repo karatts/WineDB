@@ -1,0 +1,27 @@
+{
+  "name": "wine_not-final_project",
+  "version": "1.0.0",
+  "description": "Web app that is meant for keeping track of your favorite wines and discovering new ones!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0480-008-spring-2017/kat392-final-project.git"
+  },
+  "author": "Kara Tong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0480-008-spring-2017/kat392-final-project/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0480-008-spring-2017/kat392-final-project#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "eslint": "^3.18.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mongoose": "^4.9.2",
+    "mongoose-url-slugs": "^0.2.1"
+  }
+}
