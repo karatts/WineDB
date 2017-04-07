@@ -1,0 +1,38 @@
+<h3>Update your preferences!</h3>
+
+<p><form method="POST" action="">
+		<font size ="5"><b><u>Preferences:</u></b></font><br><br>
+		Types of Wines you enjoy:
+		<label><input type="checkbox" name="type" required>
+		Red Wine</label><br>
+		Red wines are made from black grapes and have a red or blue tint. Most grapes have colorless juice, so to make red wine the grape skins, which contain nearly all of the grapes’ pigmentation, have to remain intact with the juice during all or part of the fermentation process. Tannins are also found in the grape skins, and are transferred into the wine while the skins are in contact with the juice. Besides the difference in color, the primary difference between red and white wines comes are tannins. Found mainly in red wines, they provide a dry, puckery sensation in the mouth and in the back of the throat. They also help preserve wine, allowing most (but not all) red wines to be aged longer than white wines. Popular red wines include Beaujolais, Cabernet Sauvignon, Chianti, Merlot, Pinot Noir and Zinfandel.
+		<br>
+		<label><input type="checkbox" name="type" required>
+		White Wine</label> <br>
+		White wines are wines that contain little or no red pigmentation. These wines are almost always made from white grapes, but can be made from black grapes as well. Winemakers can make white wine from black grapes because the juice in most black grapes is actually clear. White wines can be sweet or dry, or somewhere in between. Popular white wines include Chardonnay, Pinot Grigio / Pinot Gris, Riesling and Sauvignon Blanc.
+		<br>
+		<br>
+		<img src="/public/images/sweetness.png">
+		<br>
+		Preferred Sweetness:
+		<br>
+		<label><input type="checkbox" name="sweetness" required>
+		Bone Dry</label>
+		<label><input type="checkbox" name="sweetness" required>
+		Dry</label>
+		<label><input type="checkbox" name="sweetness" required>
+		Semi-Sweet</label>
+		<label><input type="checkbox" name="sweetness" required>
+		Sweet</label>
+		<label><input type="checkbox" name="sweetness" required>
+		Very Sweet</label>
+		<br><br>
+		<input type="submit"><br>
+</form></p>
+{{#if unerror}}
+<p>The username you entered is already being used. Please try again.</p>
+{{/if}}
+{{#if pwerror}}
+<p>Password must be 8 characters in length. Please try again.</p>
+{{/if}}
+<a href="/">Back to the home page</a>

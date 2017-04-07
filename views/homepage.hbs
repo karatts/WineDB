@@ -1,0 +1,29 @@
+<h1>Home Page</h1>
+
+{{#if id}}
+<p>Welcome, {{session}}! <br>
+Here are some suggested wines! <br>
+..... <br>
+..... <br>
+..... <br>
+</p>
+<br>
+<br>
+<p>
+Quick access to: <br>
+Your favorites || Need to Try! || Dislikes
+</p>
+Check out <a href="/restricted">some secret user stuff</a>! || <a href="/logout">Logout</a>
+{{/if}}
+
+{{#if noid}}
+<p>Not logged in.<br>
+<a href="/login">Login</a> or <a href="/register">Register</a></p>
+{{/if}}
+
+<p>List of random wines... <br>
+.... <br> 
+.... <br>
+.... <br>
+.... <br>
+</p>

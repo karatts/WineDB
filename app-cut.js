@@ -1,4 +1,5 @@
-// a taste of login! - express app demonstrating registration and login
+// app.js
+
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -9,7 +10,7 @@ const bcrypt = require('bcrypt');
 const app = express();
 //express-session
 const sessionOptions = {
-	secret: 'this is a random secret',
+	secret: 'secret cookie thang',
 	resave: true,
 	saveUninitialized: true
 };
@@ -24,15 +25,16 @@ app.set('view engine', 'hbs');
 
 require('./db');
 
+//const Feedback = mongoose.model("Feedback");
+//const Wine = mongoose.model("Wine");
 const User = mongoose.model("User");
+//const Pref = mongoose.model("Pref");
 
-User.remove({}, function(err) { 
-   console.log('collection removed') 
-});
-//-----------------------------------------------------------
+//------------------------------------------------------------------------
 
 //home page
-app.get('/', (req, res) => {
+app.get('/', function(req, res){
+	console.log('in app.get /');
 	const sessID = req.session.username;
 	if(sessID === undefined){
 		res.render('homepage', {noid: true});
@@ -57,7 +59,6 @@ app.get('/register', (req, res) => {
 });
 //post - to process the form input
 app.post('/register', (req, res) => {
-	console.log(req.body);
 	const testPW = req.body.password;
 	let testUN = req.body.username;
 	User.findOne({username: testUN}, (err, result, count) => {
@@ -74,11 +75,9 @@ app.post('/register', (req, res) => {
 				testUN = testUN.toLowerCase();
 				const usr = new User({
 					username: testUN,
-					fname: req.body.fname,
-					lname: req.body.lname,
 					password: hash,
 				});
-				console.log(usr.password);
+				//console.log(usr.password);
 				usr.save((err) => {
 					if(err){
 						console.log(err);
@@ -87,7 +86,9 @@ app.post('/register', (req, res) => {
 						req.session.regenerate((err) => {
 							if(!err){
 								req.session.username = usr.username;
-								res.redirect('/');
+								//redirect to user preferences set up page
+								console.log('wow')
+								//res.redirect('/preferences');
 							}
 							else{
 								console.log(err);
@@ -152,10 +153,48 @@ app.get('/restricted', (req, res) => {
 	}
 });
 
-app.get('/classifications', (req, res) => {
-	res.sendFile(path.join(__dirname, "public/images", "sweetness.png"));
+app.get('/preferences', (req, res) => {
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		//not logged in
+		res.redirect('/login');
+	}
+	else{
+		//logged in
+		sessID = sessID.toLowerCase();
+		User.findOne({username: sessID}, (err, result, count) => {
+			if(result && !err){
+				console.log('logged in!')
+				//res.render('preferences', {res: result});
+			}
+			else{
+				console.log('Had a problem finding user');
+				console.log(err);
+			}
+		});
+	}
+});
+app.post('/preferences', (req, res) => {
+	console.log(req.body);
 });
 
+//add a wine form
+app.get('/addawine', (req, res) => {
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		//not logged in
+		res.render('addawine', {});
+	}
+	else{
+		//logged in
+		res.render('addawine', {});
+	}
+});
+app.post('/addawine', (req, res) => {
+
+});
+
+//logout
 app.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
 		if(err){

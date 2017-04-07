@@ -1,0 +1,16 @@
+<p><form method="POST" action="">
+		<font size ="5"><b><u>Login:</u></b></font><br><br>
+		<label>Username:</label><input type="text" name="username" required>
+		<br>
+		<label>Password:</label><input type="text" name="password" required>
+		<br>
+		<br>
+		<input type="submit"><br>
+</form></p>
+{{#if unerror}}
+<p>The username you entered is not valid. Please try again.</p>
+{{/if}}
+{{#if pwerror}}
+<p>Incorrect password. Please try again.</p>
+{{/if}}
+<a href="/">Back to the home page</a>
