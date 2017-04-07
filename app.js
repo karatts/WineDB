@@ -1,4 +1,3 @@
-// a taste of login! - express app demonstrating registration and login
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -77,6 +76,8 @@ app.post('/register', (req, res) => {
 					fname: req.body.fname,
 					lname: req.body.lname,
 					password: hash,
+					type: req.body.type,
+					sweetness: req.body.sweetness,
 				});
 				console.log(usr.password);
 				usr.save((err) => {
@@ -150,6 +151,46 @@ app.get('/restricted', (req, res) => {
 		//logged in
 		res.render('restricted', {});
 	}
+});
+
+app.get('/preferences', (req, res) => {
+	let sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		sessID = sessID.toLowerCase();
+		User.find({username: sessID}, (err, results, count) =>{
+			if(results && !err){
+				console.log(results[0]);
+				res.render('preferences', results[0]);
+			}
+			else{
+				console.log('error in app.get /preferences');
+				console.log(err);
+			}
+		});
+	}
+});
+app.post('/preferences', (req, res) => {
+	let sessID = req.session.username;
+	sessID = sessID.toLowerCase();
+	console.log(sessID);
+	console.log(req.body.type);
+	console.log(req.body.sweetness);
+	User.find({username: sessID}, (err, results, count) => {
+		results[0].type = req.body.type;
+		results[0].sweetness = req.body.sweetness;
+		results[0].save((err) => {
+			if(err){
+				console.log(err);
+			}
+			else{
+				//console.log(results[0]);
+				res.render('preferences', results[0]);
+			}
+		})
+	});
 });
 
 app.get('/classifications', (req, res) => {

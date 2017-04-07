@@ -1,30 +1,3 @@
-// app.js
-
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const bodyParser = require('body-parser');
-const path = require('path');
-const bcrypt = require('bcrypt');
-//express
-const app = express();
-//express-session
-const sessionOptions = {
-	secret: 'secret cookie thang',
-	resave: true,
-	saveUninitialized: true
-};
-app.use(session(sessionOptions));
-//body-parser
-app.use(bodyParser.urlencoded({ extended: false}));
-// express static setup
-app.use(express.static(path.join(__dirname, 'public')));
-// hbs setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
-
-require('./db');
-
 //const Feedback = mongoose.model("Feedback");
 //const Wine = mongoose.model("Wine");
 const User = mongoose.model("User");
@@ -61,6 +34,8 @@ app.get('/register', (req, res) => {
 app.post('/register', (req, res) => {
 	const testPW = req.body.password;
 	let testUN = req.body.username;
+	console.log(req.body.type);
+	console.log(req.body.sweetness);
 	User.findOne({username: testUN}, (err, result, count) => {
 		const pwerr = (testPW.length < 8);
 		let unerr = false;
@@ -76,6 +51,10 @@ app.post('/register', (req, res) => {
 				const usr = new User({
 					username: testUN,
 					password: hash,
+					fname: req.body.fname,
+					lname: req.body.lname,
+					type: req.body.type,
+					sweetness: req.body.sweetness,
 				});
 				//console.log(usr.password);
 				usr.save((err) => {
@@ -87,8 +66,7 @@ app.post('/register', (req, res) => {
 							if(!err){
 								req.session.username = usr.username;
 								//redirect to user preferences set up page
-								console.log('wow')
-								//res.redirect('/preferences');
+								res.redirect('/');
 							}
 							else{
 								console.log(err);

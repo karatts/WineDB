@@ -16,4 +16,6 @@ User.plugin(URLSlugs('username fname lname'));
 
 mongoose.model('User', User);
 
-mongoose.connect('mongodb://localhost/finProj');
+mongoose.connect('mongodb://localhost/finProj', () =>{
+	 //mongoose.connection.db.dropDatabase();
+});
