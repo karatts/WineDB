@@ -20,8 +20,8 @@ body {
 }
 /*Nav Bar*/
 .nav-justified {
-  background-color: #994568;
-  border: 1px solid #994568;
+  background-color: #846f89;
+  border: 1px solid #846f89;
   border-radius: 5px;
 }
 .nav-justified > li > a {
@@ -32,13 +32,13 @@ body {
   color: #ffffff; /*Changes link text color*/
   text-align: center;
   background-color: #e5e5e5; /* Old browsers */
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#00004e), to(#662e5f));
-  background-image: -webkit-linear-gradient(top, #00004e 0%, #662e5f 100%);
-  background-image:      -o-linear-gradient(top, #00004e 0%, #662e5f 100%);
-  background-image:         linear-gradient(to bottom, #00004e 0%,#662e5f 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00004e', endColorstr='#662e5f',GradientType=0 ); /* IE6-9 */
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#3e3145), to(#44435e));
+  background-image: -webkit-linear-gradient(top, #3e3145 0%, #44435e 100%);
+  background-image:      -o-linear-gradient(top, #3e3145 0%, #44435e 100%);
+  background-image:         linear-gradient(to bottom, #3e3145 0%,#44435e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3e3145', endColorstr='#44435e',GradientType=0 ); /* IE6-9 */
   background-repeat: repeat-x; /* Repeat the gradient */
-  border-bottom: 1px solid #994568;
+  border-bottom: 1px solid #846f89;
 }
 .nav-justified > li:first-child > a {
   border-radius: 5px 5px 0 0;
@@ -53,8 +53,8 @@ body {
     max-height: 52px;
   }
   .nav-justified > li > a {
-    border-right: 1px solid #994568;
-    border-left: 1px solid #994568;
+    border-right: 1px solid #846f89;
+    border-left: 1px solid #846f89;
   }
   .nav-justified > li:first-child > a {
     border-left: 0;

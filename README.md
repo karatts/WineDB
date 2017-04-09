@@ -117,7 +117,9 @@ Red:
 
 (___TODO__: list any tutorials/references/etc. that you've based your code off of_)
 
-1. NONE YET.
+1. http://stackoverflow.com/questions/10768891/how-to-change-the-default-background-color-white-to-something-else-in-twitter-bo
+2. http://getbootstrap.com/getting-started/#examples
+3. http://htmlreference.io/element/input/
 
 Example:
 1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
