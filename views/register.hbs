@@ -10,15 +10,24 @@
        	</nav>
 	</div>
 </div>
-
-<p><form method="POST" action="">
-		<font size ="5"><b><u>Register:</u></b></font><br><br>
+<div class="container"><br>{{#if unerror}}
+<font color="#e50000">The username you entered is already being used. Please try again.</font>
+{{/if}}
+{{#if pwerror}}
+<font color="#e50000">Password must be 8 characters in length. Please try again.</font>
+{{/if}}<br><br></div>
+<div class="container">
+<div class="jumbotron"><center>
+<font size ="5"><b>Create your Wine Not account</b></font><br><br>
+<form method="POST" action="">
 		<font size="3"><b>Basic Information:</b></font><br><br>
-		<label>First Name:</label><input type="text" name="fname" required>  <label>Last Name:</label><input type="text" name="lname" required>
+		<label>First Name:</label> <input type="text" name="fname" required>
 		<br><br>
-		<label>Username:</label><input type="text" name="username" required>
+		<label>Last Name:</label> <input type="text" name="lname" required>
 		<br><br>
-		<label>Password:</label><input type="text" name="password" required>
+		<label>Username:</label> <input type="text" name="username" required>
+		<br><br>
+		<label>Password:</label> <input type="text" name="password" required>
 		<br>
 		<br>
 		<font size="3"><b>Select your wine preferences!</b></font><br>
@@ -28,7 +37,6 @@
 		Red Wine</label>
 		<label><input type="checkbox" name="type" value="white wine">
 		White Wine</label> <br>
-		<br>
 		<br>
 		Preferred Sweetness:<br>
 		<font size="2">If you need more information on sweetness classifications, please take a look at <a href="/classifications">this</a> page.</font>
@@ -45,11 +53,4 @@
 		Very Sweet</label>
 		<br><br>
 		<input type="submit"><br>
-</form></p>
-{{#if unerror}}
-<p>The username you entered is already being used. Please try again.</p>
-{{/if}}
-{{#if pwerror}}
-<p>Password must be 8 characters in length. Please try again.</p>
-{{/if}}
-<a href="/">Back to the home page</a>
+</form></center></div></div>
