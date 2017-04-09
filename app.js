@@ -104,7 +104,7 @@ app.post('/register', (req, res) => {
 //login form
 app.get('/login', (req, res) => {
 	console.log('in app.get /login');
-	res.render('login', {});
+	res.render('login', {first: true});
 });
 app.post('/login', (req, res) => {
 	let name = req.body.username;
