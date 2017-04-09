@@ -117,10 +117,8 @@ Red:
 
 (___TODO__: list any tutorials/references/etc. that you've based your code off of_)
 
-1. http://stackoverflow.com/questions/10768891/how-to-change-the-default-background-color-white-to-something-else-in-twitter-bo
-2. http://getbootstrap.com/getting-started/#examples
-3. http://htmlreference.io/element/input/
-
-Example:
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
+1. [Working Around Bootstrap CSS - Background Color](http://stackoverflow.com/questions/10768891/how-to-change-the-default-background-color-white-to-something-else-in-twitter-bo)
+2. [Basic Bootstrap Examples](http://getbootstrap.com/getting-started/#examples)
+3. [HTML Form Guide](http://htmlreference.io/element/input/)
+4. [HTML Form Year Dropdown](http://snipplr.com/view/4157/birth-year-dropdown/)
+5. [HTML Image Override](http://stackoverflow.com/questions/31448390/bootstrap-fallback-when-there-an-image-load-error)

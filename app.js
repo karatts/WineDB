@@ -140,8 +140,8 @@ app.post('/login', (req, res) => {
 	});
 });
 
-//a page that can only be seen if logged in
-app.get('/restricted', (req, res) => {
+//add a wine to the database!
+app.get('/addawine', (req, res) => {
 	const sessID = req.session.username;
 	if(sessID === undefined){
 		//not logged in
@@ -149,10 +149,11 @@ app.get('/restricted', (req, res) => {
 	}
 	else{
 		//logged in
-		res.render('restricted', {});
+		res.render('addawine', {});
 	}
 });
 
+//preferences
 app.get('/preferences', (req, res) => {
 	let sessID = req.session.username;
 	if(sessID === undefined){
