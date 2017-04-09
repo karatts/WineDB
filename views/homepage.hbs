@@ -1,3 +1,65 @@
+{{#if noid}}
+<nav class="navbar">
+<div class="container">
+	<div class="masthead">
+        <nav>
+        <ul class="nav nav-justified">
+         	<li><a href="/">Home</a></li>
+           	<li><a href="/login">Login</a></li>
+           	<li><a href="/register">Register</a></li>
+           	<li><a href="/search">Search</a></li>
+       	</ul>
+       	</nav>
+	</div>
+	</div>
+</nav>
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+          <div class="jumbotron">
+          <center>
+          <h1>Welcome to Wine Not!</h1>
+          	<img src="images/head.gif" alt="header">
+          	 <p><Br>There's so much shit out there, let us help you find the boozy goodness you're looking for!</p>
+          	</center>
+          </div>
+          <div class="row">
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+            <div class="col-xs-6 col-lg-4">
+              <h2>Heading</h2>
+              <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            </div><!--/.col-xs-6.col-lg-4-->
+          </div><!--/row-->
+</div>
+<div class="container"><br><center><p><a class="btn btn-lg btn-primary" href="#" role="button">Register with us for....<br>MORE WINE!</a></p></center></div>
+{{/if}}
+
+
+
 {{#if id}}
 <div class="container">
 	<div class="masthead">
@@ -29,45 +91,17 @@
        	</ul>
        	</nav>
 	</div>
+
+		<p>Welcome, {{session}}! <br>
+		Here are some suggested wines! <br>
+		..... <br>
+		..... <br>
+		..... <br>
+		</p>
+		<br>
+		<br>
+		<p>
+		Check out <a href="/restricted">some secret user stuff</a>!</p>
+
 </div>
-
-<p>Welcome, {{session}}! <br>
-Here are some suggested wines! <br>
-..... <br>
-..... <br>
-..... <br>
-</p>
-<br>
-<br>
-<p>
-Quick access to: <br>
-<a href="/preferences">Preferences</a> || Your favorites || Need to Try! || Dislikes
-</p>
-Check out <a href="/restricted">some secret user stuff</a>! || <a href="/logout">Logout</a>
 {{/if}}
-
-{{#if noid}}
-<div class="container">
-	<div class="masthead">
-        <h3 class="text-muted">Wine Not!</h3>
-        <nav>
-        <ul class="nav nav-justified">
-         	<li><a href="/">Home</a></li>
-           	<li><a href="/login">Login</a></li>
-           	<li><a href="/register">Register</a></li>
-           	<li><a href="/search">Search</a></li>
-       	</ul>
-       	</nav>
-	</div>
-</div>
-
-<p>Not logged in.<br>
-<a href="/login">Login</a> or <a href="/register">Register</a></p>
-{{/if}}
-
-<p>List of random wines... <br>
-.... <br> 
-.... <br>
-.... <br>
-.... <br>
-</p>
