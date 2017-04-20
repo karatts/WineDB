@@ -1,3 +1,8 @@
+/*/{{#if success}}
+<center><p><b>
+Successfully added {{wine.brand}}: {{wine.name}} to the Magical Wine DB</b></p></center>
+{{/if}}
+
 //const Feedback = mongoose.model("Feedback");
 //const Wine = mongoose.model("Wine");
 const User = mongoose.model("User");
@@ -19,6 +24,7 @@ app.get('/', function(req, res){
 
 //register form
 //get - to display the form
+
 app.get('/register', (req, res) => {
 	console.log('in app.get /register');
 	User.find({}, (err, users) => {

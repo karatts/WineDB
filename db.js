@@ -12,9 +12,20 @@ const User = new mongoose.Schema({
   sweetness: [String]
 });
 
-User.plugin(URLSlugs('username fname lname'));
+const Wine = new mongoose.Schema({
+	brand: String,
+	name: String,
+	year: String,
+	type: [String],
+	sweetness: [String],
+	comments: [String],
+	avgrating: Number
+});
+
+Wine.plugin(URLSlugs('brand name year'));
 
 mongoose.model('User', User);
+mongoose.model('Wine', Wine);
 
 
 // is the environment variable, NODE_ENV, set to PRODUCTION? 

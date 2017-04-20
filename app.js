@@ -6,6 +6,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 //express
 const app = express();
+const router = express.Router();
 //express-session
 const sessionOptions = {
 	secret: 'this is a random secret',
@@ -24,14 +25,17 @@ app.set('view engine', 'hbs');
 require('./db');
 
 const User = mongoose.model("User");
+const Wine = mongoose.model("Wine");
 
 User.remove({}, function(err) { 
    console.log('collection removed') 
 });
+
+app.use('/', router);
 //-----------------------------------------------------------
 
 //home page
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
 	const sessID = req.session.username;
 	if(sessID === undefined){
 		res.render('homepage', {noid: true});
@@ -43,7 +47,7 @@ app.get('/', (req, res) => {
 
 //register form
 //get - to display the form
-app.get('/register', (req, res) => {
+router.get('/register', (req, res) => {
 	console.log('in app.get /register');
 	User.find({}, (err, users) => {
 		if(err){
@@ -55,7 +59,7 @@ app.get('/register', (req, res) => {
 	});
 });
 //post - to process the form input
-app.post('/register', (req, res) => {
+router.post('/register', (req, res) => {
 	console.log(req.body);
 	const testPW = req.body.password;
 	let testUN = req.body.username;
@@ -102,11 +106,11 @@ app.post('/register', (req, res) => {
 });
 
 //login form
-app.get('/login', (req, res) => {
+router.get('/login', (req, res) => {
 	console.log('in app.get /login');
 	res.render('login', {first: true});
 });
-app.post('/login', (req, res) => {
+router.post('/login', (req, res) => {
 	let name = req.body.username;
 	name = name.toLowerCase();
 	User.findOne({username: name}, (err, result, count) => {
@@ -141,7 +145,7 @@ app.post('/login', (req, res) => {
 });
 
 //add a wine to the database!
-app.get('/addawine', (req, res) => {
+router.get('/addawine', (req, res) => {
 	const sessID = req.session.username;
 	if(sessID === undefined){
 		//not logged in
@@ -153,8 +157,29 @@ app.get('/addawine', (req, res) => {
 	}
 });
 
+router.post('/addawine', (req, res) => {
+	const newWine = new Wine({
+		brand: req.body.brand,
+		name: req.body.name,
+		year: req.body.year,
+		type: req.body.type,
+		sweetness: req.body.sweetness,
+		image: req.body.image,
+	});
+	newWine.save((err) =>{
+		if(err){
+			console.log("Error saving new wine...");
+		}
+		else{
+			console.log(newWine);
+			console.log(newWine.slug);
+			res.render('addawine', {success: true, wine: newWine});
+		}
+	});
+});
+
 //preferences
-app.get('/preferences', (req, res) => {
+router.get('/preferences', (req, res) => {
 	let sessID = req.session.username;
 	if(sessID === undefined){
 		res.redirect('/login');
@@ -173,7 +198,7 @@ app.get('/preferences', (req, res) => {
 		});
 	}
 });
-app.post('/preferences', (req, res) => {
+router.post('/preferences', (req, res) => {
 	let sessID = req.session.username;
 	sessID = sessID.toLowerCase();
 	console.log(sessID);
@@ -194,11 +219,37 @@ app.post('/preferences', (req, res) => {
 	});
 });
 
+//search page
+router.get('/search', (req, res) => {
+	let sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('search', {});
+	}
+	else{
+		sessID = sessID.toLowerCase();
+		User.find({username: sessID}, (err, results, count) =>{
+			if(results && !err){
+				console.log(results[0]);
+				res.render('search', results[0]);
+			}
+			else{
+				console.log('error in app.get /search');
+				console.log(err);
+			}
+		});
+	}
+});
+router.post('/search', (req, res) => {
+
+});
+
+//classification image
 app.get('/classifications', (req, res) => {
 	res.sendFile(path.join(__dirname, "public/images", "sweetness.png"));
 });
 
-app.get('/logout', (req, res) => {
+//logout page
+router.get('/logout', (req, res) => {
 	req.session.destroy((err) => {
 		if(err){
 			console.log('There was a problem logging out!');
