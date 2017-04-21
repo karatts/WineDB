@@ -33,15 +33,159 @@ User.remove({}, function(err) {
 
 app.use('/', router);
 //-----------------------------------------------------------
+//Default starter wine DB
+const newWine1 = new Wine({
+	brand: "Mascota Vineyards",
+	name: "Unanime",
+	year: "2013",
+	type: "Red Wine",
+	sweetness: ["Dry", "Semi-Sweet"],
+	image: "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png",
+	comments: [],
+	avgrating: 93,
+});
+newWine1.save((err) =>{
+	if(err){
+		console.log("Error saving default wine 1...");
+	}
+});
+const newWine2 = new Wine({
+	brand: "Chateau Dalem",
+	name: "Fronsac",
+	year: "2014",
+	type: "Red Wine",
+	sweetness: ["Dry", "Semi-Sweet"],
+	image: "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png",
+	comments: [],
+	avgrating: 91,
+});
+newWine2.save((err) =>{
+	if(err){
+		console.log("Error saving default wine 2...");
+	}
+});
+const newWine3 = new Wine({
+	brand: "Dr Heidemanns",
+	name: "Riesling Qba",
+	year: "2015",
+	type: "White Wine",
+	sweetness: ["Semi-Sweet", "Sweet"],
+	image: "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png",
+	comments: [],
+	avgrating: 88,
+});
+newWine3.save((err) =>{
+	if(err){
+		console.log("Error saving default wine 3...");
+	}
+});
+const newWine4 = new Wine({
+	brand: "Renieri",
+	name: "Invetro",
+	year: "2013",
+	type: "Red Wine",
+	sweetness: ["Dry"],
+	image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
+	comments: [],
+	avgrating: 91,
+});
+newWine4.save((err) =>{
+	if(err){
+		console.log("Error saving default wine 4...");
+	}
+});
+const newWine5 = new Wine({
+	brand: "Olema",
+	name: "Chardonnay Sonoma",
+	year: "2014",
+	type: "White Wine",
+	sweetness: ["Dry", "Semi-Sweet"],
+	image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
+	comments: [],
+	avgrating: 91,
+});
+newWine5.save((err) =>{
+	if(err){
+		console.log("Error saving default wine 5...");
+	}
+});
+
+//-----------------------------------------------------------
 
 //home page
 router.get('/', (req, res) => {
 	const sessID = req.session.username;
+	let winehp = [];
 	if(sessID === undefined){
-		res.render('homepage', {noid: true});
+		Wine.find({}, (err, result, count) => {
+			if(err){
+				console.log('error in get /');
+			}
+			else{
+				console.log(result);
+				let numAdded = [];
+				const len = result.length;
+				while(numAdded.length < 5){			
+					let num = Math.floor(Math.random() * ((len-1) - 0 + 1) + 0);
+					if(numAdded.includes(num) === false){
+						winehp.push(result[num]);
+						numAdded.push(num);
+					}
+				};
+			}
+		});
+		res.render('homepage', {noid: true, wine: winehp});
 	}
 	else{
-		res.render('homepage', {id: true, session: sessID});
+		const sessID2 = sessID.toLowerCase();
+		const winePref = [];
+		User.find({username: sessID2}, (err, result1, count) => {
+			//find user preferences
+			const typeLike = result1[0].type;
+			const sweetnessLen = (result1[0].sweetness).length;
+			//pick one random sweetness preference
+			let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
+			const sweetPref = (result1[0].sweetness)[num2];
+			if(typeLike.length === 1){
+				Wine.find({type: typeLike, sweetness: sweetPref}, (err, result2, count) => {
+					console.log(result2);
+					let addedNums1 = [];
+					let i = 0;
+					const addedLen = result2.length;
+					if(addedLen < 6){
+						result2.forEach((ele) =>{
+							winePref.push(ele);
+						});
+					}
+					else{
+						while(addedNums1.length < 6){
+							let num3 = Math.floor(Math.random() * ((addedLen-1) - 0 + 1) + 0);
+							console.log(num3);
+							if(addedNums1.includes(num3) === false){
+								console.log(result2[num3]);
+								winePref.push(result2[num3]);
+								addedNums1.push(num3);
+							}
+						}
+					}
+				});
+			}
+			else{
+				Wine.find({sweetness: sweetPref}, (err, result4, count) => {
+					let addedNums2 = [];
+						let i = 0;
+						for(i = 0; i < 6; i++){
+							let num4 = Math.floor(Math.random() * ((result4.length-1) - 0 + 1) + 0);
+							if(addedNums2.includes(num4) === false){
+								winePref.push(result4[num4]);
+								addedNums2.push(num4);
+							}
+						}
+				});
+			}
+			
+		});
+		res.render('homepage', {id: true, session: sessID, wine: winePref});
 	}
 });
 
@@ -165,6 +309,8 @@ router.post('/addawine', (req, res) => {
 		type: req.body.type,
 		sweetness: req.body.sweetness,
 		image: req.body.image,
+		comments: [],
+		avgrating: 0,
 	});
 	newWine.save((err) =>{
 		if(err){
@@ -223,7 +369,7 @@ router.post('/preferences', (req, res) => {
 router.get('/search', (req, res) => {
 	let sessID = req.session.username;
 	if(sessID === undefined){
-		res.redirect('search', {});
+		res.redirect('/login');
 	}
 	else{
 		sessID = sessID.toLowerCase();

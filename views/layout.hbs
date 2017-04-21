@@ -28,10 +28,31 @@
 
     <footer class="footer">
       <div class="container">
-        <p><br>Kara Tong  &copy; 2017 Wine Not, Inc.</p>
+       <table style="width:100%">
+        <tr>
+            <td>Kara Tong  &copy; 2017 Wine Not, Inc.</td>
+            <td><div id="logo" align="right"><a href="https://twitter.com/WineNotDB"><img src="../images/twitter.png" height="50" width="50"></a></div></td>
+          </tr>
+        </table>
       </div>
     </footer>
 
+    <!-- Twitter API setup -->
+    <script>window.twttr = (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0],
+      t = window.twttr || {};
+      if (d.getElementById(id)) return t;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://platform.twitter.com/widgets.js";
+      fjs.parentNode.insertBefore(js, fjs);
+
+      t._e = [];
+      t.ready = function(f) {
+        t._e.push(f);
+      };
+      return t;
+    }(document, "script", "twitter-wjs"));</script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
