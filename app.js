@@ -143,12 +143,35 @@ router.get('/', (req, res) => {
 			//find user preferences
 			const typeLike = result1[0].type;
 			const sweetnessLen = (result1[0].sweetness).length;
-			//pick one random sweetness preference
-			let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
-			const sweetPref = (result1[0].sweetness)[num2];
+			//if there is one type of wine preference
 			if(typeLike.length === 1){
-				Wine.find({type: typeLike, sweetness: sweetPref}, (err, result2, count) => {
-					console.log(result2);
+				//if there is no sweetness preference
+				if(sweetnessLen === 0){
+					Wine.find({type: typeLike}, (err, resultw1, count) =>{
+						if(resultw1.length < 6){
+							resultw1.forEach((ele)=>{
+								winePref.push(ele);
+							});
+						}
+						else{
+							let addedNums2 = [];
+							while(addedNums2.length < 6){
+								let num5 = Math.floor(Math.random() * ((resultw1.length-1) - 0 + 1) + 0);
+								if(addedNums1.includes(num5) === false){
+									winePref.push(resultw1[num5]);
+									addedNums1.push(num5);
+								}
+							}
+						}
+					});
+				}
+				//if there is a sweetness preference
+				else{
+					//pick one random sweetness preference
+					let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
+					const sweetPref = (result1[0].sweetness)[num2];
+
+					Wine.find({type: typeLike, sweetness: sweetPref}, (err, result2, count) => {
 					let addedNums1 = [];
 					let i = 0;
 					const addedLen = result2.length;
@@ -160,19 +183,49 @@ router.get('/', (req, res) => {
 					else{
 						while(addedNums1.length < 6){
 							let num3 = Math.floor(Math.random() * ((addedLen-1) - 0 + 1) + 0);
-							console.log(num3);
 							if(addedNums1.includes(num3) === false){
-								console.log(result2[num3]);
 								winePref.push(result2[num3]);
 								addedNums1.push(num3);
 							}
 						}
 					}
-				});
+					});
+				}
 			}
 			else{
-				Wine.find({sweetness: sweetPref}, (err, result4, count) => {
-					let addedNums2 = [];
+			//if they like none or both of the types
+				//if they have no preferences, display random from all wines
+				if(sweetnessLen === 0){
+					Wine.find({}, (err, result, count) => {
+						if(err){
+							console.log('error in get /');
+						}
+						else{
+							let numAdded3 = [];
+							const len = result.length;
+							if(len < 6){
+								result.forEach((ele)=>{
+									winePref.push(ele);
+								});
+							}
+							else{
+								while(numAdded3.length < 6){			
+									let num = Math.floor(Math.random() * ((len-1) - 0 + 1) + 0);
+									if(numAdded3.includes(num) === false){
+										winePref.push(result[num]);
+										numAdded3.push(num);
+									}
+								};
+							}
+						}
+					});
+				}
+				else{
+				//if they have a sweetness preference, pick one and display those
+					let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
+					const sweetPref = (result1[0].sweetness)[num2];
+					Wine.find({sweetness: sweetPref}, (err, result4, count) => {
+						let addedNums2 = [];
 						let i = 0;
 						for(i = 0; i < 6; i++){
 							let num4 = Math.floor(Math.random() * ((result4.length-1) - 0 + 1) + 0);
@@ -181,11 +234,11 @@ router.get('/', (req, res) => {
 								addedNums2.push(num4);
 							}
 						}
-				});
+					});
+				}
 			}
-			
+			res.render('homepage', {id: true, session: sessID, wine: winePref});
 		});
-		res.render('homepage', {id: true, session: sessID, wine: winePref});
 	}
 });
 
@@ -297,7 +350,7 @@ router.get('/addawine', (req, res) => {
 	}
 	else{
 		//logged in
-		res.render('addawine', {});
+		res.render('addawine', {start: true});
 	}
 });
 
