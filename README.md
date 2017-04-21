@@ -99,12 +99,13 @@ Red:
 
 * (5 points) Integrate user authentication
 	* Minimally, implement sign up and registration
-	* Or implement sign in with provider, such as FB Connect, Google, etc. (which could be worth more points)
 * (2 points) Use a CSS framework throughout your site, use a reasonable of customization of the framework (don't just use stock Bootstrap - minimally configure a theme):
 	* Bootstrap
-	* Foundation
-* (3 points) Configuration management
-	* Node convict
+* (3 points) Perform client side form validation using custom JavaScript or JavaScript library
+	* errors must be integrated into the DOM
+	* the following will not receive full credit:
+		* using form elements with attributes as constraints
+		* displaying errors with alert
 
 10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
