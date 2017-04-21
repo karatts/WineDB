@@ -101,11 +101,11 @@ Red:
 	* Minimally, implement sign up and registration
 * (2 points) Use a CSS framework throughout your site, use a reasonable of customization of the framework (don't just use stock Bootstrap - minimally configure a theme):
 	* Bootstrap
-* (3 points) Perform client side form validation using custom JavaScript or JavaScript library
-	* errors must be integrated into the DOM
-	* the following will not receive full credit:
-		* using form elements with attributes as constraints
-		* displaying errors with alert
+* (1 - 6 points) Per external API used
+	* assign a point value to the library or module that you're using based on amount of effort and/or code required for integration
+	* for example, angular 2 might be 6 points, while google maps might be 1 point
+	* Must link to source code relevant to implementation and API documentation
+		* Twitter API (3 points)
 
 10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
