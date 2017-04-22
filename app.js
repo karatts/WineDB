@@ -161,9 +161,9 @@ router.get('/', (req, res) => {
 							let addedNums2 = [];
 							while(addedNums2.length < 6){
 								let num5 = Math.floor(Math.random() * ((resultw1.length-1) - 0 + 1) + 0);
-								if(addedNums1.includes(num5) === false){
+								if(addedNums2.includes(num5) === false){
 									winePref.push(resultw1[num5]);
-									addedNums1.push(num5);
+									addedNums2.push(num5);
 								}
 							}
 						}
