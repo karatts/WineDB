@@ -394,12 +394,15 @@ router.post('/addawine', (req, res) => {
 });
 
 //Wine slug
-router.get("/:slug", (req, res)=>{
+router.get("/:slug", (req, res) => {
 	console.log("AT THE SLUG PAGE");
 	const slug = req.params.slug;
 	Wine.find({slug: slug}, (err, result, count) => {
 		if(err){
-			console.log("Error at the slug page").
+			console.log("Error at the slug page");
+		}
+		else{
+
 		}
 	});
 });
