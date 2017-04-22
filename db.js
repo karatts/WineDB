@@ -48,5 +48,5 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
 }
 
 mongoose.connect(dbconf, () =>{
-	 mongoose.connection.db.dropDatabase();
+	 //mongoose.connection.db.dropDatabase();
 });
