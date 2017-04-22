@@ -109,7 +109,11 @@ newWine5.save((err) =>{
 		console.log("Error saving default wine 5...");
 	}
 });
-
+//-----------------------------------------------------------
+//random functions
+function capFirst(str) {
+    return str.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '); 
+}
 //-----------------------------------------------------------
 
 //home page
@@ -355,24 +359,47 @@ router.get('/addawine', (req, res) => {
 });
 
 router.post('/addawine', (req, res) => {
-	const newWine = new Wine({
-		brand: req.body.brand,
-		name: req.body.name,
-		year: req.body.year,
-		type: req.body.type,
-		sweetness: req.body.sweetness,
-		image: req.body.image,
-		comments: [],
-		avgrating: 0,
-	});
-	newWine.save((err) =>{
-		if(err){
-			console.log("Error saving new wine...");
+	let brand = req.body.brand;
+	brand = capFirst(brand);
+	let name = req.body.name;
+	name = capFirst(name);
+
+	Wine.find({brand: brand, name: name, year: req.body.year}, (err, result, count) =>{
+		if(result.length !== 0){
+			//don't add the wine
+			res.render('addawine', {exists: true, wine: result[0]});
 		}
 		else{
-			console.log(newWine);
-			console.log(newWine.slug);
-			res.render('addawine', {success: true, wine: newWine});
+			const newWine = new Wine({
+				brand: brand,
+				name: name,
+				year: req.body.year,
+				type: req.body.type,
+				sweetness: req.body.sweetness,
+				image: req.body.image,
+				comments: [],
+				avgrating: 0,
+			});
+			//add the wine
+			newWine.save((err) =>{
+				if(err){
+					console.log("Error saving new wine...");
+				}
+				else{
+					res.render('addawine', {success: true, wine: newWine});
+				}
+			});
+		}
+	});
+});
+
+//Wine slug
+router.get("/:slug", (req, res)=>{
+	console.log("AT THE SLUG PAGE");
+	const slug = req.params.slug;
+	Wine.find({slug: slug}, (err, result, count) => {
+		if(err){
+			console.log("Error at the slug page").
 		}
 	});
 });
