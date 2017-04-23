@@ -44,9 +44,16 @@ const newWine1 = new Wine({
 	comments: [],
 	avgrating: 93,
 });
-newWine1.save((err) =>{
-	if(err){
-		console.log("Error saving default wine 1...");
+Wine.find({brand: newWine1.brand, name: newWine1.name, year: newWine1.year}, (err, results, count) =>{
+	if(results.length === 0){
+		newWine1.save((err) =>{
+			if(err){
+				console.log("Error saving default wine 1...");
+			}
+		});
+	}
+	else{
+		console.log(results);
 	}
 });
 const newWine2 = new Wine({
@@ -59,9 +66,15 @@ const newWine2 = new Wine({
 	comments: [],
 	avgrating: 91,
 });
-newWine2.save((err) =>{
-	if(err){
-		console.log("Error saving default wine 2...");
+Wine.find({brand: newWine2.brand, name: newWine2.name, year: newWine2.year}, (err, results, count) =>{
+	if(results.length === 0){
+		newWine2.save((err) =>{
+			if(err){
+				console.log("Error saving default wine 2...");
+			}
+		});
+	}else{
+		console.log(results);
 	}
 });
 const newWine3 = new Wine({
@@ -74,9 +87,15 @@ const newWine3 = new Wine({
 	comments: [],
 	avgrating: 88,
 });
-newWine3.save((err) =>{
-	if(err){
-		console.log("Error saving default wine 3...");
+Wine.find({brand: newWine3.brand, name: newWine3.name, year: newWine3.year}, (err, results, count) =>{
+	if(results.length === 0){
+		newWine3.save((err) =>{
+			if(err){
+				console.log("Error saving default wine 3...");
+			}
+		});
+	}else{
+		console.log(results);
 	}
 });
 const newWine4 = new Wine({
@@ -89,9 +108,15 @@ const newWine4 = new Wine({
 	comments: [],
 	avgrating: 91,
 });
-newWine4.save((err) =>{
-	if(err){
-		console.log("Error saving default wine 4...");
+Wine.find({brand: newWine4.brand, name: newWine4.name, year: newWine4.year}, (err, results, count) =>{
+	if(results.length === 0){
+		newWine4.save((err) =>{
+			if(err){
+				console.log("Error saving default wine 4...");
+			}
+		});
+	}else{
+		console.log(results);
 	}
 });
 const newWine5 = new Wine({
@@ -104,9 +129,15 @@ const newWine5 = new Wine({
 	comments: [],
 	avgrating: 91,
 });
-newWine5.save((err) =>{
-	if(err){
-		console.log("Error saving default wine 5...");
+Wine.find({brand: newWine5.brand, name: newWine5.name, year: newWine5.year}, (err, results, count) =>{
+	if(results.length === 0){
+		newWine5.save((err) =>{
+			if(err){
+				console.log("Error saving default wine 5...");
+			}
+		});
+	}else{
+		console.log(results);
 	}
 });
 //-----------------------------------------------------------
@@ -152,10 +183,12 @@ router.get('/', (req, res) => {
 				//if there is no sweetness preference
 				if(sweetnessLen === 0){
 					Wine.find({type: typeLike}, (err, resultw1, count) =>{
+						console.log(resultw1);
 						if(resultw1.length < 6){
 							resultw1.forEach((ele)=>{
 								winePref.push(ele);
 							});
+							res.render('homepage', {id: true, session: sessID, wine: winePref});
 						}
 						else{
 							let addedNums2 = [];
@@ -166,6 +199,7 @@ router.get('/', (req, res) => {
 									addedNums2.push(num5);
 								}
 							}
+							res.render('homepage', {id: true, session: sessID, wine: winePref});
 						}
 					});
 				}
@@ -183,6 +217,7 @@ router.get('/', (req, res) => {
 						result2.forEach((ele) =>{
 							winePref.push(ele);
 						});
+						res.render('homepage', {id: true, session: sessID, wine: winePref});
 					}
 					else{
 						while(addedNums1.length < 6){
@@ -192,6 +227,7 @@ router.get('/', (req, res) => {
 								addedNums1.push(num3);
 							}
 						}
+						res.render('homepage', {id: true, session: sessID, wine: winePref});
 					}
 					});
 				}
@@ -211,6 +247,7 @@ router.get('/', (req, res) => {
 								result.forEach((ele)=>{
 									winePref.push(ele);
 								});
+								res.render('homepage', {id: true, session: sessID, wine: winePref});
 							}
 							else{
 								while(numAdded3.length < 6){			
@@ -220,6 +257,7 @@ router.get('/', (req, res) => {
 										numAdded3.push(num);
 									}
 								};
+								res.render('homepage', {id: true, session: sessID, wine: winePref});
 							}
 						}
 					});
@@ -238,10 +276,11 @@ router.get('/', (req, res) => {
 								addedNums2.push(num4);
 							}
 						}
+						res.render('homepage', {id: true, session: sessID, wine: winePref});
 					});
 				}
 			}
-			res.render('homepage', {id: true, session: sessID, wine: winePref});
+			//res.render('homepage', {id: true, session: sessID, wine: winePref});
 		});
 	}
 });
