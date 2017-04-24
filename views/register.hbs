@@ -10,12 +10,17 @@
        	</nav>
 	</div>
 </div>
-<div class="container"><br>{{#if unerror}}
-<font color="#e50000">The username you entered is already being used. Please try again.</font>
+<div class="container"><br>
+{{#if error}}
+<font color="#e50000">
+{{#if unerror}}
+The username you entered is already being used.
 {{/if}}
 {{#if pwerror}}
-<font color="#e50000">Password must be 8 characters in length. Please try again.</font>
-{{/if}}<br><br></div>
+Password must be 8 characters in length. 
+{{/if}}
+Please try again.</font><br><br>
+{{/if}}</div>
 <div class="container">
 <div class="jumbotron"><center>
 <font size ="5"><b>Create your Wine Not account</b></font><br><br>
@@ -53,4 +58,5 @@
 		Very Sweet</label>
 		<br><br>
 		<input type="submit"><br>
-</form></center></div></div>
+</form>
+</center></div></div>

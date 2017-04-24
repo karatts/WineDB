@@ -170,13 +170,13 @@ router.get('/', (req, res) => {
 //get - to display the form
 router.get('/register', (req, res) => {
 	console.log('in router.get /register');
-	User.find({}, (err, users) => {
-		if(err){
-			console.log(err);
-		}else{
-			res.render('register', {users: users});
-		}
-	});
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		res.render('register', {});
+	}
+	else{
+		res.render('loggedin', {id: sessID});
+	}
 });
 //post - to process the form input
 router.post('/register', (req, res) => {
@@ -186,11 +186,11 @@ router.post('/register', (req, res) => {
 	User.findOne({username: testUN}, (err, result, count) => {
 		const pwerr = (testPW.length < 8);
 		let unerr = false;
-		if(result){
+		if(result !== null){
 			unerr = true;
 		}
 		if(pwerr || unerr){
-			res.render('register', {pwerror: pwerr, unerror: unerr});
+			res.render('register', {error: true, pwerror: pwerr, unerror: unerr});
 		}
 		else{
 			bcrypt.hash(testPW, 10, function(err, hash) {
@@ -227,7 +227,13 @@ router.post('/register', (req, res) => {
 //login form
 router.get('/login', (req, res) => {
 	console.log('in app.get /login');
-	res.render('login', {first: true});
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		res.render('login', {});
+	}
+	else{
+		res.render('loggedin', {id: sessID});
+	}
 });
 router.post('/login', (req, res) => {
 	let name = req.body.username;
