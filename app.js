@@ -32,118 +32,9 @@ User.remove({}, function(err) {
 });
 
 app.use('/', router);
+
 //-----------------------------------------------------------
-//Default starter wine DB function
-function addStarterWines(){
-	const newWine1 = new Wine({
-		brand: "Mascota Vineyards",
-		name: "Unanime",
-		year: "2013",
-		type: "Red Wine",
-		sweetness: ["Dry", "Semi-Sweet"],
-		image: "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png",
-		comments: [],
-		avgrating: 93,
-	});
-	Wine.find({brand: newWine1.brand, name: newWine1.name, year: newWine1.year}, (err, results, count) =>{
-		if(results.length === 0){
-			newWine1.save((err) =>{
-				if(err){
-					console.log("Error saving default wine 1...");
-				}
-			});
-		}
-		else{
-			//console.log(results);
-		}
-	});
-	const newWine2 = new Wine({
-		brand: "Chateau Dalem",
-		name: "Fronsac",
-		year: "2014",
-		type: "Red Wine",
-		sweetness: ["Dry", "Semi-Sweet"],
-		image: "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png",
-		comments: [],
-		avgrating: 91,
-	});
-	Wine.find({brand: newWine2.brand, name: newWine2.name, year: newWine2.year}, (err, results, count) =>{
-		if(results.length === 0){
-			newWine2.save((err) =>{
-				if(err){
-					console.log("Error saving default wine 2...");
-				}
-			});
-		}else{
-			//console.log(results);
-		}
-	});
-	const newWine3 = new Wine({
-		brand: "Dr Heidemanns",
-		name: "Riesling Qba",
-		year: "2015",
-		type: "White Wine",
-		sweetness: ["Semi-Sweet", "Sweet"],
-		image: "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png",
-		comments: [],
-		avgrating: 88,
-	});
-	Wine.find({brand: newWine3.brand, name: newWine3.name, year: newWine3.year}, (err, results, count) =>{
-		if(results.length === 0){
-			newWine3.save((err) =>{
-				if(err){
-					console.log("Error saving default wine 3...");
-				}
-			});
-		}else{
-			//console.log(results);
-		}
-	});
-	const newWine4 = new Wine({
-		brand: "Renieri",
-		name: "Invetro",
-		year: "2013",
-		type: "Red Wine",
-		sweetness: ["Dry"],
-		image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
-		comments: [],
-		avgrating: 91,
-	});
-	Wine.find({brand: newWine4.brand, name: newWine4.name, year: newWine4.year}, (err, results, count) =>{
-		if(results.length === 0){
-			newWine4.save((err) =>{
-				if(err){
-					console.log("Error saving default wine 4...");
-				}
-			});
-		}else{
-			//console.log(results);
-		}
-	});
-	const newWine5 = new Wine({
-		brand: "Olema",
-		name: "Chardonnay Sonoma",
-		year: "2014",
-		type: "White Wine",
-		sweetness: ["Dry", "Semi-Sweet"],
-		image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
-		comments: [],
-		avgrating: 91,
-	});
-	Wine.find({brand: newWine5.brand, name: newWine5.name, year: newWine5.year}, (err, results, count) =>{
-		if(results.length === 0){
-			newWine5.save((err) =>{
-				if(err){
-					console.log("Error saving default wine 5...");
-				}
-			});
-		}else{
-			//console.log(results);
-		}
-	});
-}
-//-----------------------------------------------------------
-//random functions
+//Functions
 function capFirst(str) {
     return str.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '); 
 }
@@ -179,15 +70,52 @@ function findAndAddWine(object2find, winePref, length, res, sessID){
 		}
 	});
 }
+function createAWine(brand, name, year, type, sweetness, image, rating){
+	const wine = new Wine({
+		brand: brand,
+		name: name,
+		year: year,
+		type: type,
+		sweetness: sweetness,
+		image: image,
+		avgrating: rating,
+		comments: [],
+	});
+	Wine.find({brand: wine.brand, name: wine.name, year: wine.year}, (err, results, count) =>{
+		if(results.length === 0){
+			wine.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 1...");
+				}
+			});
+		}
+	});
+}
+
+//-----------------------------------------------------------
+// Starter wines
+function addStarterWines(){
+	createAWine("Mascota Vineyards", "Unanime", "2013", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png", 93);
+	createAWine("Chateau Dalem", "Fronsac", "2014", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png", 91);
+	createAWine("Dr Heidemanns", "Riesling Qba", "2015", "White Wine", ["Semi-Sweet", "Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png", 88);
+	createAWine("Renieri", "Invetro", "2013", "Red Wine", ["Dry"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91);
+	createAWine("Olema", "Chardonnay Sonoma", "2014", "White Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91);
+}
 //-----------------------------------------------------------
 
-addStarterWines();
+let start = true;
 
 //home page
 router.get('/', (req, res) => {
+	console.log('in router.get /');
 	const sessID = req.session.username;
-	let winehp = [];
 	if(sessID === undefined){
+		if(start){
+			addStarterWines();
+			start = false;
+			console.log('Adding startup wines');
+		}
+		let winehp = [];
 		Wine.find({}, (err, result, count) => {
 			if(err){
 				console.log('error in get /');
@@ -241,7 +169,7 @@ router.get('/', (req, res) => {
 //register form
 //get - to display the form
 router.get('/register', (req, res) => {
-	console.log('in app.get /register');
+	console.log('in router.get /register');
 	User.find({}, (err, users) => {
 		if(err){
 			console.log(err);
@@ -252,7 +180,7 @@ router.get('/register', (req, res) => {
 });
 //post - to process the form input
 router.post('/register', (req, res) => {
-	console.log(req.body);
+	console.log('in router.post /register');
 	const testPW = req.body.password;
 	let testUN = req.body.username;
 	User.findOne({username: testUN}, (err, result, count) => {
@@ -275,7 +203,6 @@ router.post('/register', (req, res) => {
 					type: req.body.type,
 					sweetness: req.body.sweetness,
 				});
-				console.log(usr.password);
 				usr.save((err) => {
 					if(err){
 						console.log(err);
