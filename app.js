@@ -33,119 +33,155 @@ User.remove({}, function(err) {
 
 app.use('/', router);
 //-----------------------------------------------------------
-//Default starter wine DB
-const newWine1 = new Wine({
-	brand: "Mascota Vineyards",
-	name: "Unanime",
-	year: "2013",
-	type: "Red Wine",
-	sweetness: ["Dry", "Semi-Sweet"],
-	image: "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png",
-	comments: [],
-	avgrating: 93,
-});
-Wine.find({brand: newWine1.brand, name: newWine1.name, year: newWine1.year}, (err, results, count) =>{
-	if(results.length === 0){
-		newWine1.save((err) =>{
-			if(err){
-				console.log("Error saving default wine 1...");
-			}
-		});
-	}
-	else{
-		console.log(results);
-	}
-});
-const newWine2 = new Wine({
-	brand: "Chateau Dalem",
-	name: "Fronsac",
-	year: "2014",
-	type: "Red Wine",
-	sweetness: ["Dry", "Semi-Sweet"],
-	image: "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png",
-	comments: [],
-	avgrating: 91,
-});
-Wine.find({brand: newWine2.brand, name: newWine2.name, year: newWine2.year}, (err, results, count) =>{
-	if(results.length === 0){
-		newWine2.save((err) =>{
-			if(err){
-				console.log("Error saving default wine 2...");
-			}
-		});
-	}else{
-		console.log(results);
-	}
-});
-const newWine3 = new Wine({
-	brand: "Dr Heidemanns",
-	name: "Riesling Qba",
-	year: "2015",
-	type: "White Wine",
-	sweetness: ["Semi-Sweet", "Sweet"],
-	image: "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png",
-	comments: [],
-	avgrating: 88,
-});
-Wine.find({brand: newWine3.brand, name: newWine3.name, year: newWine3.year}, (err, results, count) =>{
-	if(results.length === 0){
-		newWine3.save((err) =>{
-			if(err){
-				console.log("Error saving default wine 3...");
-			}
-		});
-	}else{
-		console.log(results);
-	}
-});
-const newWine4 = new Wine({
-	brand: "Renieri",
-	name: "Invetro",
-	year: "2013",
-	type: "Red Wine",
-	sweetness: ["Dry"],
-	image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
-	comments: [],
-	avgrating: 91,
-});
-Wine.find({brand: newWine4.brand, name: newWine4.name, year: newWine4.year}, (err, results, count) =>{
-	if(results.length === 0){
-		newWine4.save((err) =>{
-			if(err){
-				console.log("Error saving default wine 4...");
-			}
-		});
-	}else{
-		console.log(results);
-	}
-});
-const newWine5 = new Wine({
-	brand: "Olema",
-	name: "Chardonnay Sonoma",
-	year: "2014",
-	type: "White Wine",
-	sweetness: ["Dry", "Semi-Sweet"],
-	image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
-	comments: [],
-	avgrating: 91,
-});
-Wine.find({brand: newWine5.brand, name: newWine5.name, year: newWine5.year}, (err, results, count) =>{
-	if(results.length === 0){
-		newWine5.save((err) =>{
-			if(err){
-				console.log("Error saving default wine 5...");
-			}
-		});
-	}else{
-		console.log(results);
-	}
-});
+//Default starter wine DB function
+function addStarterWines(){
+	const newWine1 = new Wine({
+		brand: "Mascota Vineyards",
+		name: "Unanime",
+		year: "2013",
+		type: "Red Wine",
+		sweetness: ["Dry", "Semi-Sweet"],
+		image: "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png",
+		comments: [],
+		avgrating: 93,
+	});
+	Wine.find({brand: newWine1.brand, name: newWine1.name, year: newWine1.year}, (err, results, count) =>{
+		if(results.length === 0){
+			newWine1.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 1...");
+				}
+			});
+		}
+		else{
+			//console.log(results);
+		}
+	});
+	const newWine2 = new Wine({
+		brand: "Chateau Dalem",
+		name: "Fronsac",
+		year: "2014",
+		type: "Red Wine",
+		sweetness: ["Dry", "Semi-Sweet"],
+		image: "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png",
+		comments: [],
+		avgrating: 91,
+	});
+	Wine.find({brand: newWine2.brand, name: newWine2.name, year: newWine2.year}, (err, results, count) =>{
+		if(results.length === 0){
+			newWine2.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 2...");
+				}
+			});
+		}else{
+			//console.log(results);
+		}
+	});
+	const newWine3 = new Wine({
+		brand: "Dr Heidemanns",
+		name: "Riesling Qba",
+		year: "2015",
+		type: "White Wine",
+		sweetness: ["Semi-Sweet", "Sweet"],
+		image: "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png",
+		comments: [],
+		avgrating: 88,
+	});
+	Wine.find({brand: newWine3.brand, name: newWine3.name, year: newWine3.year}, (err, results, count) =>{
+		if(results.length === 0){
+			newWine3.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 3...");
+				}
+			});
+		}else{
+			//console.log(results);
+		}
+	});
+	const newWine4 = new Wine({
+		brand: "Renieri",
+		name: "Invetro",
+		year: "2013",
+		type: "Red Wine",
+		sweetness: ["Dry"],
+		image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
+		comments: [],
+		avgrating: 91,
+	});
+	Wine.find({brand: newWine4.brand, name: newWine4.name, year: newWine4.year}, (err, results, count) =>{
+		if(results.length === 0){
+			newWine4.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 4...");
+				}
+			});
+		}else{
+			//console.log(results);
+		}
+	});
+	const newWine5 = new Wine({
+		brand: "Olema",
+		name: "Chardonnay Sonoma",
+		year: "2014",
+		type: "White Wine",
+		sweetness: ["Dry", "Semi-Sweet"],
+		image: "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png",
+		comments: [],
+		avgrating: 91,
+	});
+	Wine.find({brand: newWine5.brand, name: newWine5.name, year: newWine5.year}, (err, results, count) =>{
+		if(results.length === 0){
+			newWine5.save((err) =>{
+				if(err){
+					console.log("Error saving default wine 5...");
+				}
+			});
+		}else{
+			//console.log(results);
+		}
+	});
+}
 //-----------------------------------------------------------
 //random functions
 function capFirst(str) {
     return str.split(' ').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(' '); 
 }
+function getNum(first, last){
+	return Math.floor(Math.random() * ((last) - first + 1) + first);
+}
+function checkWines(num, addWine, numArray, wineArray){
+	if(numArray.includes(num) === false){
+		wineArray.push(addWine);
+		numArray.push(num);
+	}
+}
+function findAndAddWine(object2find, winePref, length, res, sessID){
+	Wine.find(object2find, (err, result, count) => {
+		if(err){
+			console.log(err);
+		}
+		else{
+			let addedNums = [];
+			if(result.length < length){
+				result.forEach((ele) => {
+					winePref.push(ele);
+				});
+				res.render('homepage', {id: true, session: sessID, wine: winePref});
+			}
+			else{
+				while(addedNums.length < length){
+					let num = getNum(0, (result.length - 1));
+					checkWines(num, result[num], addedNums, winePref);
+				}
+				res.render('homepage', {id: true, session: sessID, wine: winePref});
+			}
+		}
+	});
+}
 //-----------------------------------------------------------
+
+addStarterWines();
 
 //home page
 router.get('/', (req, res) => {
@@ -157,15 +193,10 @@ router.get('/', (req, res) => {
 				console.log('error in get /');
 			}
 			else{
-				console.log(result);
 				let numAdded = [];
-				const len = result.length;
-				while(numAdded.length < 5){			
-					let num = Math.floor(Math.random() * ((len-1) - 0 + 1) + 0);
-					if(numAdded.includes(num) === false){
-						winehp.push(result[num]);
-						numAdded.push(num);
-					}
+				while(numAdded.length < 5){	
+					let num = getNum(0, (result.length-1));
+					checkWines(num, result[num], numAdded, winehp);
 				};
 			}
 		});
@@ -178,109 +209,31 @@ router.get('/', (req, res) => {
 			//find user preferences
 			const typeLike = result1[0].type;
 			const sweetnessLen = (result1[0].sweetness).length;
-			//if there is one type of wine preference
-			if(typeLike.length === 1){
+			if(typeLike.length === 1){ //if there is one type of wine preference
 				//if there is no sweetness preference
 				if(sweetnessLen === 0){
-					Wine.find({type: typeLike}, (err, resultw1, count) =>{
-						console.log(resultw1);
-						if(resultw1.length < 6){
-							resultw1.forEach((ele)=>{
-								winePref.push(ele);
-							});
-							res.render('homepage', {id: true, session: sessID, wine: winePref});
-						}
-						else{
-							let addedNums2 = [];
-							while(addedNums2.length < 6){
-								let num5 = Math.floor(Math.random() * ((resultw1.length-1) - 0 + 1) + 0);
-								if(addedNums2.includes(num5) === false){
-									winePref.push(resultw1[num5]);
-									addedNums2.push(num5);
-								}
-							}
-							res.render('homepage', {id: true, session: sessID, wine: winePref});
-						}
-					});
+					findAndAddWine({type: typeLike}, winePref, 6, res, sessID);
 				}
 				//if there is a sweetness preference
 				else{
 					//pick one random sweetness preference
-					let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
+					let num2 = getNum(0, (sweetnessLen - 1));
 					const sweetPref = (result1[0].sweetness)[num2];
-
-					Wine.find({type: typeLike, sweetness: sweetPref}, (err, result2, count) => {
-					let addedNums1 = [];
-					let i = 0;
-					const addedLen = result2.length;
-					if(addedLen < 6){
-						result2.forEach((ele) =>{
-							winePref.push(ele);
-						});
-						res.render('homepage', {id: true, session: sessID, wine: winePref});
-					}
-					else{
-						while(addedNums1.length < 6){
-							let num3 = Math.floor(Math.random() * ((addedLen-1) - 0 + 1) + 0);
-							if(addedNums1.includes(num3) === false){
-								winePref.push(result2[num3]);
-								addedNums1.push(num3);
-							}
-						}
-						res.render('homepage', {id: true, session: sessID, wine: winePref});
-					}
-					});
+					findAndAddWine({type: typeLike, sweetness: sweetPref}, winePref, 6, res, sessID);
 				}
 			}
-			else{
-			//if they like none or both of the types
+			else{ //if they like none or both of the types
 				//if they have no preferences, display random from all wines
 				if(sweetnessLen === 0){
-					Wine.find({}, (err, result, count) => {
-						if(err){
-							console.log('error in get /');
-						}
-						else{
-							let numAdded3 = [];
-							const len = result.length;
-							if(len < 6){
-								result.forEach((ele)=>{
-									winePref.push(ele);
-								});
-								res.render('homepage', {id: true, session: sessID, wine: winePref});
-							}
-							else{
-								while(numAdded3.length < 6){			
-									let num = Math.floor(Math.random() * ((len-1) - 0 + 1) + 0);
-									if(numAdded3.includes(num) === false){
-										winePref.push(result[num]);
-										numAdded3.push(num);
-									}
-								};
-								res.render('homepage', {id: true, session: sessID, wine: winePref});
-							}
-						}
-					});
+					findAndAddWine({}, winePref, 6, res, sessID);
 				}
 				else{
 				//if they have a sweetness preference, pick one and display those
-					let num2 = Math.floor(Math.random() * ((sweetnessLen-1) - 0 + 1) + 0);
+					let num2 = getNum(0, (sweetnessLen - 1));
 					const sweetPref = (result1[0].sweetness)[num2];
-					Wine.find({sweetness: sweetPref}, (err, result4, count) => {
-						let addedNums2 = [];
-						let i = 0;
-						for(i = 0; i < 6; i++){
-							let num4 = Math.floor(Math.random() * ((result4.length-1) - 0 + 1) + 0);
-							if(addedNums2.includes(num4) === false){
-								winePref.push(result4[num4]);
-								addedNums2.push(num4);
-							}
-						}
-						res.render('homepage', {id: true, session: sessID, wine: winePref});
-					});
+					findAndAddWine({sweetness: sweetPref}, winePref, 6, res, sessID);
 				}
 			}
-			//res.render('homepage', {id: true, session: sessID, wine: winePref});
 		});
 	}
 });
@@ -293,7 +246,6 @@ router.get('/register', (req, res) => {
 		if(err){
 			console.log(err);
 		}else{
-			console.log(users);
 			res.render('register', {users: users});
 		}
 	});
