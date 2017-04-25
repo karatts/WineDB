@@ -23,12 +23,21 @@
           	</center>
           </div>
           <div class="row">
-          {{#each wine}}
+          {{#each wine1}}
             <div class="col-xs-6 col-lg-4">
               <h3>{{this.brand}}: {{this.name}}</h3>
               <p>This is a {{this.year}}, {{this.type}} from {{this.brand}} called "{{this.name}}". It's {{#each this.sweetness}}{{this}} and {{/each}}perfect for a casual night in or a formal dinner party.</p>
               <p><a class="btn btn-default" href="/{{this.slug}}" role="button">About this wine &raquo;</a></p>
             </div><!--/.col-xs-6.col-lg-4-->
+          {{/each}}
+          </div><!--/row-->
+          <div class="row">
+          {{#each wine2}}
+          <div class="col-xs-6 col-lg-4">
+            <h3>{{this.brand}}: {{this.name}}</h3>
+            <p>This is a {{this.year}}, {{this.type}} from {{this.brand}} called "{{this.name}}". It's {{#each this.sweetness}}{{this}} and {{/each}}perfect for a casual night in or a formal dinner party.</p>
+            <p><a class="btn btn-default" href="/{{this.slug}}" role="button">About this wine &raquo;</a></p>
+          </div><!--/.col-xs-6.col-lg-4-->
           {{/each}}
             <div class="col-xs-6 col-lg-4">
               <br><br>
@@ -84,7 +93,7 @@
             </center>
           </div>
           <div class="row">
-            {{#each wine}}
+            {{#each wine1}}
             <div class="col-xs-6 col-lg-4">
               <h3>{{this.brand}}: {{this.name}}</h3>
               <p>This is a {{this.year}}, {{this.type}} from {{this.brand}} called "{{this.name}}". It's {{#each this.sweetness}}{{this}} and {{/each}}perfect for a casual night in or a formal dinner party.</p>
@@ -92,5 +101,15 @@
             </div><!--/.col-xs-6.col-lg-4-->
           {{/each}}
           </div><!--/row-->
+          <div class="row">
+          {{#each wine2}}
+          <div class="col-xs-6 col-lg-4">
+            <h3>{{this.brand}}: {{this.name}}</h3>
+            <p>This is a {{this.year}}, {{this.type}} from {{this.brand}} called "{{this.name}}". It's {{#each this.sweetness}}{{this}} and {{/each}}perfect for a casual night in or a formal dinner party.</p>
+            <p><a class="btn btn-default" href="/{{this.slug}}" role="button">About this wine &raquo;</a></p>
+          </div><!--/.col-xs-6.col-lg-4-->
+          {{/each}}
+          </div>
 </div>
 {{/if}}
+</div>

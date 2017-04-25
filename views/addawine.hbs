@@ -202,13 +202,17 @@
 	{{/if}}
 	{{#if success}}
 	<div class="jumbotron">
-	You've successfully added {{wine.brand}}: {{wine.name}} to the DB!
+	<center>You've successfully added {{wine.brand}}: {{wine.name}} to the DB!<br></center>
 	</div>
+	<div><center><h3>See what others have contributed!</h3>
+	<a class="twitter-timeline" data-width="900" data-height="200" data-theme="light" data-link-color="#E81C4F" href="https://twitter.com/WineNotDB">Tweets by WineNotDB</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></center></div>
 	{{/if}}
 	{{#if exists}}
 	<div class="jumbotron">
-	{{wine.brand}}: {{wine.name}} already exists in the DB! Check out <a href="/wine/{{wine.slug}}">it's page</a> if you'd like to leave a review or comment.
+	<center>{{wine.brand}}: {{wine.name}} already exists in the DB! Check out <a href="/wine/{{wine.slug}}">it's page</a> if you'd like to leave a review or comment, or save it to one of your lists.</center>
 	</div>
+	<div><center><h3>See what others have contributed!</h3>
+	<a class="twitter-timeline" href="https://twitter.com/WineNotDB">Tweets by WineNotDB</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></center></div>
 	{{/if}}
 </div>
 

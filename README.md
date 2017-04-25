@@ -105,9 +105,9 @@ Red:
 	* assign a point value to the library or module that you're using based on amount of effort and/or code required for integration
 	* for example, angular 2 might be 6 points, while google maps might be 1 point
 	* Must link to source code relevant to implementation and API documentation
-		* Twitter API (3 points)
+		* Twitter Client - Twitter REST API (2 points)
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+9 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
 
 
 ## [Link to Initial Main Project File](app.js) 
@@ -123,3 +123,4 @@ Red:
 3. [HTML Form Guide](http://htmlreference.io/element/input/)
 4. [HTML Form Year Dropdown](http://snipplr.com/view/4157/birth-year-dropdown/)
 5. [HTML Image Override](http://stackoverflow.com/questions/31448390/bootstrap-fallback-when-there-an-image-load-error)
+6. [NPM Twitter Client](https://github.com/desmondmorris/node-twitter)

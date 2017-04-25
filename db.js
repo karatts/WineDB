@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
  	var data = fs.readFileSync(fn);
 
  // our configuration file will be in json, so parse it and set the
- // conenction string appropriately!
+ // connection string appropriately!
  	var conf = JSON.parse(data);
  	var dbconf = conf.dbconf;
 } else {
