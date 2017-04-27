@@ -1,18 +1,3 @@
-{{#if notloggedin}}
-<div class="container">
-	<div class="masthead">
-        <nav>
-        <ul class="nav nav-justified">
-         	<li><a href="/">Home</a></li>
-           	<li><a href="/login">Login</a></li>
-           	<li><a href="/register">Register</a></li>
-           	<li><a href="/search">Search</a></li>
-       	</ul>
-       	</nav>
-	</div>
-</div>
-{{/if}}
-{{#if loggedin}}
 <div class="container">
 	<div class="masthead">
 		<nav>
@@ -43,5 +28,28 @@
 		</nav>
 	</div>
 </div>
-{{/if}}
 <div class="container"><br></div>
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-right">
+		<div class="jumbotron">
+		<center>
+		<h1><b>Suggestions!</b></h1>
+		<img src="images/suggestions.gif" class="img-responsive img-rounded" alt="header" width="400">
+		<br>
+		Here are all of our wine suggestions based on your <a href="/preferences">preferences</a>!
+		</center>
+		</div>
+
+		<div class="row">
+		{{#each wine}}
+        <div class="col-xs-6 col-lg-4">
+              <h3>{{this.brand}}: {{this.name}}</h3>
+              <p>This is a {{this.year}}, {{this.type}} from {{this.brand}} called "{{this.name}}". It's {{#each this.sweetness}}{{this}} and {{/each}}perfect for a casual night in or a formal dinner party.</p>
+              <p><a class="btn btn-default" href="/wine/{{this.slug}}" role="button">About this wine &raquo;</a></p>
+        </div><!--/.col-xs-6.col-lg-4-->
+    	{{/each}}
+		</div>
+	</div>
+	<div>
+	</div>
+</div>

@@ -37,12 +37,14 @@ app.set('view engine', 'hbs');
 
 require('./db');
 
+mongoose.Promise = global.Promise;
 const User = mongoose.model("User");
 const Wine = mongoose.model("Wine");
+const Comment = mongoose.model("Comment");
 
-User.remove({}, function(err) { 
-   console.log('collection removed') 
-});
+//User.remove({}, function(err) { 
+//   console.log('collection removed') 
+//});
 
 app.use('/', router);
 //-----------------------------------------------------------
@@ -70,7 +72,15 @@ function findAndAddWine(object2find, winePref1, length, res, sessID){
 				result.forEach((ele) => {
 					winePref1.push(ele);
 				});
-				let winePref2 = winePref1.splice(0,3);
+				const spliceNum = (length - result.length)+1;
+				let winePref2 = winePref1.splice(0,spliceNum);
+
+				if(winePref1.length < winePref2.length){
+					const temp = winePref1;
+					winePref1 = winePref2;
+					winePref2 = temp;
+				}
+
 				res.render('homepage', {id: true, session: sessID, wine1: winePref1, wine2: winePref2});
 			}
 			else{
@@ -79,14 +89,14 @@ function findAndAddWine(object2find, winePref1, length, res, sessID){
 					checkWines(num, result[num], addedNums, winePref1);
 				}
 				var count = 0;
-				const newWine1 = winePref1.filter(function(ele){
+				let newWine1 = winePref1.filter(function(ele){
 					if(count < 3){
 						count = count + 1;
 						return ele;
 					}
 				});
 				count = 0;
-				const newWine2 = winePref1.filter(function(ele){
+				let newWine2 = winePref1.filter(function(ele){
 					if(count >= 3 && count < 6){
 						count = count + 1;
 						return ele;
@@ -95,13 +105,63 @@ function findAndAddWine(object2find, winePref1, length, res, sessID){
 						count = count + 1;
 					}
 				});
-
+				if(newWine1.length < newWine2.length){
+					const temp = newWine1;
+					newWine1 = newWine2;
+					newWine2 = temp;
+				}
 				res.render('homepage', {id: true, session: sessID, wine1: newWine1, wine2: newWine2});
 			}
 		}
 	});
 }
-function createAWine(brand, name, year, type, sweetness, image, rating){
+
+function findAndAddWine2(object2find, winePref1, callback){
+	var p3 = Promise.resolve(Wine.find(object2find, (err, result, count) => {
+			if(err){
+				console.log(err);
+			}
+			else{
+				result.forEach((ele) => {
+					console.log(winePref1);
+					console.log(winePref1.includes(ele));
+					if(winePref1.includes(ele) === false){
+						winePref1.push(ele);
+					}
+				});
+			}
+		}));
+	Promise.all([p3]).then(values => {
+		//console.log(values[0]);
+		callback(values[0]);
+	});
+}
+
+/*function findAndAddWine3(object2find, winePref1, sweetness, res, callback){
+	var p3 = Promise.resolve(Wine.find(object2find, (err, result, count) => {
+			if(err){
+				console.log(err);
+			}
+			else{
+				result.forEach((ele) => {
+					if(winePref1.includes(ele) !== true){
+						winePref1.push(ele);
+					}
+				});
+				//console.log(winePref1);
+			}
+		}));
+	Promise.all([p3]).then(values => {
+		console.log(values[0]);
+		//console.log(sweetness);
+		callback(object2find.type, sweetness, values[0], res);
+	});
+}*/
+
+function createAWine(brand, name, year, type, sweetness, image, rating, numrating, comments){
+	if(image === ""){
+		image = "../images/No-image-available.jpg";
+	}
 	const wine = new Wine({
 		brand: brand,
 		name: name,
@@ -110,13 +170,15 @@ function createAWine(brand, name, year, type, sweetness, image, rating){
 		sweetness: sweetness,
 		image: image,
 		avgrating: rating,
-		comments: [],
+		numratings: numrating,
+		comments: comments,
 	});
 	Wine.find({brand: wine.brand, name: wine.name, year: wine.year}, (err, results, count) =>{
 		if(results.length === 0){
-			wine.save((err) =>{
+			wine.save((err) => {
+				//console.log("in here");
 				if(err){
-					console.log("Error saving default wine 1...");
+					console.log(err);
 				}
 			});
 		}
@@ -126,11 +188,11 @@ function createAWine(brand, name, year, type, sweetness, image, rating){
 //-----------------------------------------------------------
 // Starter wines
 function addStarterWines(){
-	createAWine("Mascota Vineyards", "Unanime", "2013", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png", 93);
-	createAWine("Chateau Dalem", "Fronsac", "2014", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png", 91);
-	createAWine("Dr Heidemanns", "Riesling Qba", "2015", "White Wine", ["Semi-Sweet", "Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png", 88);
-	createAWine("Renieri", "Invetro", "2013", "Red Wine", ["Dry"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91);
-	createAWine("Olema", "Chardonnay Sonoma", "2014", "White Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91);
+	createAWine("Mascota Vineyards", "Unanime", "2013", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/hbd/h41/9701912936478.png", 93, 2, [{username: "WineCrazy21", comment: "I loved this wine! It was so great that I didn't even want to share it with my friends!", rating: 97}, {username: "Fran", comment: "Good recommendation and affordable. Would buy again.", rating: 89}]);
+	createAWine("Chateau Dalem", "Fronsac", "2014", "Red Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h22/hf4/9814718349342.png", 91, 3, [{username: "Drinks4Gran", comment: "GRANNIES 4 DRINKS CLUB LOVE THIS", rating: 85}, {username: "CatLady", comment: "Yum Yum!", rating: 98}, {username: "Gerod89", comment: "great pairing with fish", rating: 90}]);
+	createAWine("Dr Heidemanns", "Riesling Qba", "2015", "White Wine", ["Semi-Sweet", "Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h38/hdd/8811158011934.png", 88, 1, [{username: "banana4scale", comment: "Smoky flavor and the bottle could probably fit 5 bananas", rating: 88}]);
+	createAWine("Renieri", "Invetro", "2013", "Red Wine", ["Dry"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91, 2, [{username: "Clementine", comment: "i thought it was good. tbh, probs would rec to my friends.", rating: 89}, {username: "Cecile219", comment: "Fantastic!", rating: 93}]);
+	createAWine("Olema", "Chardonnay Sonoma", "2014", "White Wine", ["Dry", "Semi-Sweet"], "http://www.totalwine.com/media/sys_master/twmmedia/h94/h13/8803381018654.png", 91, 1, [{username: "Wineacc", comment: "Great wine for a good time! All my guests loved it.", rating: 91}]);
 }
 //-----------------------------------------------------------
 
@@ -140,23 +202,32 @@ let start = true;
 router.get('/', (req, res) => {
 	console.log('in router.get /');
 	const sessID = req.session.username;
+
+	if(start){
+		addStarterWines();
+		start = false;
+		console.log('Adding startup wines');
+	}
+
 	if(sessID === undefined){
-		if(start){
-			addStarterWines();
-			start = false;
-			console.log('Adding startup wines');
-		}
 		let winehp = [];
 		Wine.find({}, (err, result, count) => {
+			//console.log(result);
 			if(err){
-				console.log('error in get /');
+				console.log(err);
 			}
 			else{
 				let numAdded = [];
-				while(numAdded.length < 5){	
-					let num = getNum(0, (result.length-1));
-					checkWines(num, result[num], numAdded, winehp);
-				};
+				if(result.length < 5){
+					return res.redirect('/');
+					next();
+				}
+				else{
+					while(numAdded.length < 5){	
+						let num = getNum(0, (result.length-1));
+						checkWines(num, result[num], numAdded, winehp);
+					};
+				}
 			}
 			var count = 0;
 			const newWine4 = winehp.filter(function(ele){
@@ -176,6 +247,9 @@ router.get('/', (req, res) => {
 				}
 			});
 			res.render('homepage', {noid: true, wine1: newWine4, wine2: newWine3});
+			//if(result.length === 5){
+			//	res.redirect('/');
+			//}
 		});
 	}
 	else{
@@ -344,15 +418,23 @@ router.post('/addawine', (req, res) => {
 			res.render('addawine', {exists: true, wine: result[0]});
 		}
 		else{
+			let image = "";
+			if(req.body.image === ""){
+				image = "../images/No-image-available.jpg";
+			}
+			else{
+				image = req.body.image;
+			}
 			const newWine = new Wine({
 				brand: brand,
 				name: name,
 				year: req.body.year,
 				type: req.body.type,
 				sweetness: req.body.sweetness,
-				image: req.body.image,
+				image: image,
 				comments: [],
 				avgrating: 0,
+				numratings: 0,
 			});
 			//add the wine
 			newWine.save((err) =>{
@@ -376,6 +458,7 @@ router.post('/addawine', (req, res) => {
 
 //Wine slug --- WIP
 router.get("/wine/:slug", (req, res) => {
+	let sessID = req.session.username;
 	console.log("at router.get /wine/slug");
 	const slug = req.params.slug;
 	Wine.find({slug: slug}, (err, result, count) => {
@@ -383,20 +466,210 @@ router.get("/wine/:slug", (req, res) => {
 			console.log("Error at the wine slug page");
 		}
 		else{
-			res.render('winepage', result);
+			if(sessID === undefined){
+				res.render('winepage', {wine: result[0], notlogged: true});
+			}
+			else{
+				sessID = sessID.toLowerCase();
+				res.render('winepage', {wine: result[0], loggedin: true});
+			}
+		}
+	});
+});
+router.post("/wine/:slug", (req, res) => {
+	console.log('at router.post /wine/slug');
+	const sessID = req.session.username;
+	var wine = "";
+	Wine.findOne({slug: req.params.slug}, (err, result, count) => {
+		if(err){
+			console.log(err);
+		}
+		if(result !== undefined){
+			wine = result;
+			//check to make sure comment is not equal to default text
+			let comment = req.body.comment;
+			console.log(comment);
+			if(comment !== undefined){
+				const comms = new Comment({
+					username: sessID,
+					comment: comment,
+					rating: req.body.rating,
+				});
+				result.comments.push(comms);
+				console.log(result);
+				comms.save((err) => {
+					Comment.find({}, (err, results, count) => {
+						const currRating = result.avgrating;
+						console.log(currRating);
+						const newTot = parseInt(currRating) + parseInt(req.body.rating);
+						console.log(newTot);
+						const newTotNums = result.numratings + 1;
+						console.log(newTotNums);
+						const newRating = newTot / newTotNums;
+						console.log(newRating);
+						result.avgrating = Math.trunc(newRating);
+						result.numratings = newTotNums;
+						result.save((err) => {
+							if(err){
+								console.log(err);
+							}
+							else{
+								res.render('winepage', {wine: result, loggedin: true});
+							}
+						});
+					});
+				});
+			}
+			else{
+				res.render('winepage', {wine: result, loggedin: true, invalidComment: true});
+			}
 		}
 	});
 });
 
+//ALL THE WINE! (WORK ON FORMATTING THE ROWS IF THERE'S TIME)
+router.get('/allthewine', (req, res) => {
+	console.log('in router.get /allthewine');
+	let sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		Wine.find({}, (err, results, count) => {
+			if(err){
+				console.log(err);
+			}
+
+			const redWine = results.filter((ele) => {
+				if(ele.type[0] === "Red Wine"){
+					return ele;
+				}
+			});
+
+			const whiteWine = results.filter((ele) => {
+				if(ele.type[0] === "White Wine"){
+					return ele;
+				}
+			});
+			res.render('allthewine', {redWine: redWine, whiteWine: whiteWine});
+		});
+	}
+});
+
+/*function addThis(typePref, sweetness, array2, res){
+	if(sweetness.length !== 0){
+		let pref = sweetness.shift();
+			//console.log(array2);
+			findAndAddWine3({type: typePref, sweetness: pref}, array2, sweetness, addThis);
+	}
+	else{
+		console.log(array2);
+		res.render('suggested', {wine: array2});
+	}
+}*/
+
+router.get('/suggested', (req, res) => {
+	console.log('in router.get /suggested');
+	let sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		sessID = sessID.toLowerCase();
+		User.findOne({username: sessID}, (err, result, count) => {
+			if(result.type.length === 1){
+				//if there's only one type preference
+				if(result.sweetness.length === 0){
+					//if there's no sweetness preference
+					findAndAddWine2({type: result.type[0]}, [], function renderThis(array2){
+						res.render('suggested', {wine: array2});
+					});
+				}
+				else{
+					//there's one or more sweetness preferences
+					/*var array = [];
+					let sweetness = result.sweetness.slice();
+					//console.log(sweetness);
+					while(sweetness.length !== 0){
+						let pref = sweetness.shift();
+						findAndAddWine3({type: result.type[0], sweetness: pref}, array, sweetness, res, addThis(result.type[0], sweetness, array, res));
+					}*/
+					findAndAddWine2({type: result.type[0], sweetness: result.sweetness}, [], function renderThis(array2){
+						res.render('suggested', {wine: array2});
+					});
+				}
+			}
+			else{
+				//if there's more than one type preference, just ignore it.
+				if(result.sweetness.length !== 0){
+					findAndAddWine2({sweetness: result.sweetness}, [], function renderThis(array2){
+						res.render('suggested', {wine: array2});
+					});
+				}
+				else{
+					//three's no preferences
+					findAndAddWine2({}, [], function renderThis(array2){
+						res.render('suggested', {wine: array2});
+					});
+				}
+
+			}
+		});
+	}
+});
+
+//search page --- WIP
+router.get('/search', (req, res) => {
+	console.log('in router.get /search');
+	let sessID = req.session.username;
+	if(sessID === undefined){
+		//res.render('search', {notlogged: true});
+		res.render('notyet', {});
+	}
+	else{
+		sessID = sessID.toLowerCase();
+		User.findOne({username: sessID}, (err, result, count) =>{
+			if(result && !err){
+				//res.render('search', {loggedin: true});
+				res.render('notyet', {});
+			}
+			else{
+				console.log(err);
+			}
+		});
+	}
+});
+router.post('/search', (req, res) => {
+	res.render('notyet', {});
+});
+
 //User saved wine lists --- WIP
 router.get('/favorites' , (req, res) => {
-
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		res.render('notyet', {});
+	}
 });
 router.get('/try_these' , (req, res) => {
-
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		res.render('notyet', {});
+	}
 });
 router.get('/never_again' , (req, res) => {
-
+	const sessID = req.session.username;
+	if(sessID === undefined){
+		res.redirect('/login');
+	}
+	else{
+		res.render('notyet', {});
+	}
 });
 
 //preferences
@@ -438,29 +711,6 @@ router.post('/preferences', (req, res) => {
 			}
 		})
 	});
-});
-
-//search page --- WIP
-router.get('/search', (req, res) => {
-	console.log('in router.get /search');
-	let sessID = req.session.username;
-	if(sessID === undefined){
-		res.render('search', {notlogged: true});
-	}
-	else{
-		sessID = sessID.toLowerCase();
-		User.findOne({username: sessID}, (err, result, count) =>{
-			if(result && !err){
-				res.render('search', {loggedin: true});
-			}
-			else{
-				console.log(err);
-			}
-		});
-	}
-});
-router.post('/search', (req, res) => {
-
 });
 
 //classification image
