@@ -46,9 +46,9 @@ const Comment = mongoose.model("Comment");
 //   console.log('collection removed') 
 //});
 
-Wine.remove({}, function(err) { 
-   console.log('collection removed') 
-});
+//Wine.remove({}, function(err) { 
+//   console.log('collection removed') 
+//});
 
 app.use('/', router);
 //-----------------------------------------------------------
