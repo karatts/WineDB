@@ -123,8 +123,8 @@ function findAndAddWine2(object2find, winePref1, callback){
 			}
 			else{
 				result.forEach((ele) => {
-					console.log(winePref1);
-					console.log(winePref1.includes(ele));
+					//console.log(winePref1);
+					//console.log(winePref1.includes(ele));
 					if(winePref1.includes(ele) === false){
 						winePref1.push(ele);
 					}
@@ -488,7 +488,7 @@ router.post("/wine/:slug", (req, res) => {
 			wine = result;
 			//check to make sure comment is not equal to default text
 			let comment = req.body.comment;
-			console.log(comment);
+			//console.log(comment);
 			if(comment !== undefined){
 				const comms = new Comment({
 					username: sessID,
@@ -496,17 +496,17 @@ router.post("/wine/:slug", (req, res) => {
 					rating: req.body.rating,
 				});
 				result.comments.push(comms);
-				console.log(result);
+				//console.log(result);
 				comms.save((err) => {
 					Comment.find({}, (err, results, count) => {
 						const currRating = result.avgrating;
-						console.log(currRating);
+						//console.log(currRating);
 						const newTot = parseInt(currRating) + parseInt(req.body.rating);
-						console.log(newTot);
+						//console.log(newTot);
 						const newTotNums = result.numratings + 1;
-						console.log(newTotNums);
+						//console.log(newTotNums);
 						const newRating = newTot / newTotNums;
-						console.log(newRating);
+						//console.log(newRating);
 						result.avgrating = Math.trunc(newRating);
 						result.numratings = newTotNums;
 						result.save((err) => {
@@ -682,7 +682,7 @@ router.get('/preferences', (req, res) => {
 		sessID = sessID.toLowerCase();
 		User.find({username: sessID}, (err, results, count) =>{
 			if(results && !err){
-				console.log(results[0]);
+				//console.log(results[0]);
 				res.render('preferences', results[0]);
 			}
 			else{
@@ -695,9 +695,9 @@ router.get('/preferences', (req, res) => {
 router.post('/preferences', (req, res) => {
 	let sessID = req.session.username;
 	sessID = sessID.toLowerCase();
-	console.log(sessID);
-	console.log(req.body.type);
-	console.log(req.body.sweetness);
+	//console.log(sessID);
+	//console.log(req.body.type);
+	//console.log(req.body.sweetness);
 	User.find({username: sessID}, (err, results, count) => {
 		results[0].type = req.body.type;
 		results[0].sweetness = req.body.sweetness;
