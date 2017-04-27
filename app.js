@@ -42,13 +42,13 @@ const User = mongoose.model("User");
 const Wine = mongoose.model("Wine");
 const Comment = mongoose.model("Comment");
 
-User.remove({}, function(err) { 
-   console.log('collection removed') 
-});
+//User.remove({}, function(err) { 
+//   console.log('collection removed') 
+//});
 
-Wine.remove({}, function(err) { 
-   console.log('collection removed') 
-});
+//Wine.remove({}, function(err) { 
+//   console.log('collection removed') 
+//});
 
 app.use('/', router);
 //-----------------------------------------------------------
