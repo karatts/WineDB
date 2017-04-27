@@ -58,7 +58,7 @@
   	<img class="wineImg" src={{wine.image}} class="img-responsive img-rounded" onerror="if (this.src != '../images/No-image-available.jpg') this.src = '../images/No-image-available.jpg';">
   	</td>
   	<td>
-    <p class="padded">This is a {{wine.type}}.<br>It is known to be deep{{#each wine.sweetness}}, {{this}}{{/each}} and is great when paired with meat or cheeses.
+    <p class="padded">This is a {{wine.type}}.<br>It is known to be deep{{#each wine.sweetness}}, {{this}}{{/each}} and is great when paired with meat or cheeses.<br><br>
     <font size="4"><b>Rating:</b> {{wine.avgrating}}</font> <br> <font size="3">Reviewed by {{wine.numratings}} people</font><br><br></p>
     {{#if working}}
     <font size="3">
