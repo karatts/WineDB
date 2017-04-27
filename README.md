@@ -122,5 +122,5 @@ Red:
 2. [Basic Bootstrap Examples](http://getbootstrap.com/getting-started/#examples)
 3. [HTML Form Guide](http://htmlreference.io/element/input/)
 4. [HTML Form Year Dropdown](http://snipplr.com/view/4157/birth-year-dropdown/)
-5. [HTML Image Override](http://stackoverflow.com/questions/31448390/bootstrap-fallback-when-there-an-image-load-error)
+5. [HTML Image Override](http://stackoverflow.com/questions/980855/inputting-a-default-image-in-case-the-src-attribute-of-an-html-img-is-not-vali)
 6. [NPM Twitter Client](https://github.com/desmondmorris/node-twitter)
