@@ -55,7 +55,7 @@
   	<table class="tableClass">
   	<tr>
   	<td>
-  	<img class="wineImg" src={{wine.image}} class="img-responsive img-rounded">
+  	<img class="wineImg" src={{wine.image}} class="img-responsive img-rounded" onerror="if (this.src != '../images/No-image-available.jpg') this.src = '../images/No-image-available.jpg';">
   	</td>
   	<td>
     <p class="padded">This is a {{wine.type}}.<br>It is known to be deep{{#each wine.sweetness}}, {{this}}{{/each}} and is great when paired with meat or cheeses.

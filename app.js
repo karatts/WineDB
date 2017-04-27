@@ -470,12 +470,18 @@ router.get("/wine/:slug", (req, res) => {
 			console.log("Error at the wine slug page");
 		}
 		else{
-			if(sessID === undefined){
-				res.render('winepage', {wine: result[0], notlogged: true});
+			console.log(result);
+			if(result[0] === undefined){
+				res.render('notvalid', {});
 			}
 			else{
-				sessID = sessID.toLowerCase();
-				res.render('winepage', {wine: result[0], loggedin: true});
+				if(sessID === undefined){
+					res.render('winepage', {wine: result[0], notlogged: true});
+				}
+				else{
+					sessID = sessID.toLowerCase();
+					res.render('winepage', {wine: result[0], loggedin: true});
+				}
 			}
 		}
 	});
