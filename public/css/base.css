@@ -1,6 +1,7 @@
 html {
   position: relative;
   min-height: 100%;
+  overflow:scroll
 }
 body {
   padding-top: 10px;
